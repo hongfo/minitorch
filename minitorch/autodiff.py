@@ -76,7 +76,7 @@ def topological_sort(variable: Variable) -> Iterable[Variable]:
         if n.unique_id in Visited:
             return 
         if not n.is_leaf():
-            for input in n.history.inputs():
+            for input in n.history.inputs:
                 visit(input)
         Visited.append(n.unique_id)
         result.insert(0,n)
