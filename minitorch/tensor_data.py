@@ -44,6 +44,10 @@ def index_to_position(index: Index, strides: Strides) -> int:
     """
 
     # TODO: Implement for Task 2.1.
+    pos=0
+    for i,v in enumerate(index):
+        pos+=v*strides[i]
+    return pos
     raise NotImplementedError("Need to implement for Task 2.1")
 
 
@@ -61,7 +65,10 @@ def to_index(ordinal: int, shape: Shape, out_index: OutIndex) -> None:
 
     """
     # TODO: Implement for Task 2.1.
-    raise NotImplementedError("Need to implement for Task 2.1")
+    for d in range(len(shape)-1,-1,-1):
+        out_index[d]=ordinal%shape[d]
+        ordinal=ordinal//shape[d]
+    # raise NotImplementedError("Need to implement for Task 2.1")
 
 
 def broadcast_index(
@@ -84,6 +91,7 @@ def broadcast_index(
         None
     """
     # TODO: Implement for Task 2.2.
+
     raise NotImplementedError("Need to implement for Task 2.2")
 
 
@@ -92,7 +100,7 @@ def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
     Broadcast two shapes to create a new union shape.
 
     Args:
-        shape1 : first shape
+        shape1 : first shape 
         shape2 : second shape
 
     Returns:
@@ -226,8 +234,9 @@ class TensorData:
         assert list(sorted(order)) == list(
             range(len(self.shape))
         ), f"Must give a position to each dimension. Shape: {self.shape} Order: {order}"
-
+        return TensorData(self._storage,tuple([self.shape[i] for i in order]),tuple(self.strides[i] for i in order))
         # TODO: Implement for Task 2.1.
+
         raise NotImplementedError("Need to implement for Task 2.1")
 
     def to_string(self) -> str:
