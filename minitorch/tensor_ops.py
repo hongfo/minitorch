@@ -265,6 +265,16 @@ def tensor_map(
         in_strides: Strides,
     ) -> None:
         # TODO: Implement for Task 2.3.
+        print(out,out_shape,out_strides,in_storage,in_shape,in_strides)
+        out_index=np.array(out_shape)
+        in_index=np.array(in_shape)
+        for i in range(len(out)):   
+            to_index(i,out_shape,out_index)
+            broadcast_index(out_index,out_shape,in_shape,in_index)
+            data=in_storage[index_to_position(in_index,in_strides)]
+            map_data=fn(data)
+            out[index_to_position(out_index,out_strides)]=map_data
+        return _map
         raise NotImplementedError("Need to implement for Task 2.3")
 
     return _map
