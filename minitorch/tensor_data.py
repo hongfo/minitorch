@@ -44,9 +44,9 @@ def index_to_position(index: Index, strides: Strides) -> int:
     """
 
     # TODO: Implement for Task 2.1.
-    pos=0
-    for i,v in enumerate(index):
-        pos+=v*strides[i]
+    pos = 0
+    for i, v in enumerate(index):
+        pos += v * strides[i]
     return pos
     raise NotImplementedError("Need to implement for Task 2.1")
 
@@ -65,9 +65,9 @@ def to_index(ordinal: int, shape: Shape, out_index: OutIndex) -> None:
 
     """
     # TODO: Implement for Task 2.1.
-    for d in range(len(shape)-1,-1,-1):
-        out_index[d]=ordinal%shape[d]
-        ordinal=ordinal//shape[d]
+    for d in range(len(shape) - 1, -1, -1):
+        out_index[d] = ordinal % shape[d]
+        ordinal = ordinal // shape[d]
     # raise NotImplementedError("Need to implement for Task 2.1")
 
 
@@ -100,7 +100,7 @@ def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
     Broadcast two shapes to create a new union shape.
 
     Args:
-        shape1 : first shape 
+        shape1 : first shape
         shape2 : second shape
 
     Returns:
@@ -110,6 +110,18 @@ def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
         IndexingError : if cannot broadcast
     """
     # TODO: Implement for Task 2.2.
+    l=max(len(shape1),len(shape2))
+    if len(shape1)>len(shape2):
+        shape2=[1 for i in range(l-len(shape2))]+ list(shape2)
+        print([1 for i in range(l-len(shape2))]+ list(shape2))
+    else:
+        shape1=[1 for i in range(l-len(shape1))]+list(shape1)
+    ans=[]
+    for i in range(l):
+        if shape1[i]!=shape2[i] and shape1[i]!=1 and shape2[i]!=1:
+            raise IndexingError("it cannot broadcast")
+        ans.append(max(shape1[i],shape2[i]))
+    return tuple(ans)
     raise NotImplementedError("Need to implement for Task 2.2")
 
 
@@ -230,13 +242,16 @@ class TensorData:
 
         Returns:
             New `TensorData` with the same storage and a new dimension order.
-        """
+        """    
+        # TODO: Implement for Task 2.1.
         assert list(sorted(order)) == list(
             range(len(self.shape))
         ), f"Must give a position to each dimension. Shape: {self.shape} Order: {order}"
-        return TensorData(self._storage,tuple([self.shape[i] for i in order]),tuple(self.strides[i] for i in order))
-        # TODO: Implement for Task 2.1.
-
+        return TensorData(
+            self._storage,
+            tuple([self.shape[i] for i in order]),
+            tuple(self.strides[i] for i in order),
+        )
         raise NotImplementedError("Need to implement for Task 2.1")
 
     def to_string(self) -> str:

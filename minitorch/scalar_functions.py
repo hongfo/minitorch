@@ -130,8 +130,8 @@ class Inv(ScalarFunction):
     def backward(ctx: Context, d_output: float) -> float:
         # TODO: Implement for Task 1.4.
         a = ctx.saved_values
-        a=unwrap_tuple(a)
-        return -1/a**2 * d_output
+        a = unwrap_tuple(a)
+        return -1 / a**2 * d_output
         raise NotImplementedError("Need to implement for Task 1.4")
 
 
@@ -165,7 +165,7 @@ class Sigmoid(ScalarFunction):
     def backward(ctx: Context, d_output: float) -> float:
         # TODO: Implement for Task 1.4.
         a = ctx.saved_values
-        a=unwrap_tuple(a)
+        a = unwrap_tuple(a)
         return a * (1 - a)
         raise NotImplementedError("Need to implement for Task 1.4")
 
