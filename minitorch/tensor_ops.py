@@ -265,7 +265,6 @@ def tensor_map(
         in_strides: Strides,
     ) -> None:
         # TODO: Implement for Task 2.3.
-        print(out,out_shape,out_strides,in_storage,in_shape,in_strides)
         out_index=np.array(out_shape)
         in_index=np.array(in_shape)
         for i in range(len(out)):   
@@ -274,8 +273,7 @@ def tensor_map(
             data=in_storage[index_to_position(in_index,in_strides)]
             map_data=fn(data)
             out[index_to_position(out_index,out_strides)]=map_data
-        return _map
-        raise NotImplementedError("Need to implement for Task 2.3")
+        # raise NotImplementedError("Need to implement for Task 2.3")
 
     return _map
 
@@ -320,7 +318,18 @@ def tensor_zip(
         b_strides: Strides,
     ) -> None:
         # TODO: Implement for Task 2.3.
-        raise NotImplementedError("Need to implement for Task 2.3")
+        out_index=np.array(out_shape)
+        a_index=np.array(a_shape)
+        b_index=np.array(b_shape)
+        for i in range(len(out)):   
+            to_index(i,out_shape,out_index)
+            broadcast_index(out_index,out_shape,a_shape,a_index)
+            broadcast_index(out_index,out_shape,b_shape,b_index)
+            data_a=a_storage[index_to_position(a_index,a_strides)]
+            data_b=b_storage[index_to_position(b_index,b_strides)]
+            zip_data=fn(data_a,data_b)
+            out[index_to_position(out_index,out_strides)]=zip_data
+        # raise NotImplementedError("Need to implement for Task 2.3")
 
     return _zip
 
@@ -351,7 +360,17 @@ def tensor_reduce(
         reduce_dim: int,
     ) -> None:
         # TODO: Implement for Task 2.3.
-        raise NotImplementedError("Need to implement for Task 2.3")
+        out_index=np.array(out_shape)
+
+        for i in range(len(out)):
+            to_index(i,out_shape,out_index)
+            o_index=index_to_position(out_index,out_strides)
+            for j in range(a_shape[reduce_dim]):
+                a_index=out_index.copy()
+                a_index[reduce_dim]=j
+                pos_a=index_to_position(a_index,a_strides)
+                out[o_index]=fn(a_storage[pos_a],out[o_index])
+        # raise NotImplementedError("Need to implement for Task 2.3")
 
     return _reduce
 

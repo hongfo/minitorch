@@ -42,11 +42,10 @@ def index_to_position(index: Index, strides: Strides) -> int:
     Returns:
         Position in storage
     """
-
     # TODO: Implement for Task 2.1.
-    pos = 0
+    pos=0
     for i, v in enumerate(index):
-        pos += v * strides[i]
+            pos += v * strides[i]
     return pos
     raise NotImplementedError("Need to implement for Task 2.1")
 
@@ -115,7 +114,6 @@ def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
     l=max(len(shape1),len(shape2))
     if len(shape1)>len(shape2):
         shape2=[1 for i in range(l-len(shape2))]+ list(shape2)
-        print([1 for i in range(l-len(shape2))]+ list(shape2))
     else:
         shape1=[1 for i in range(l-len(shape1))]+list(shape1)
     ans=[]
@@ -157,7 +155,6 @@ class TensorData:
 
         if strides is None:
             strides = strides_from_shape(shape)
-
         assert isinstance(strides, tuple), "Strides must be tuple"
         assert isinstance(shape, tuple), "Shape must be tuple"
         if len(strides) != len(shape):

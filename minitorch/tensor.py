@@ -156,7 +156,7 @@ class Tensor:
     def __truediv__(self, b: TensorLike) -> Tensor:
         return Mul.apply(self, Inv.apply(self._ensure_tensor(b)))
 
-    def __rtruediv__(self, b: TensorLike) -> Tensor:
+    def __rtruediv__(self, b: TensorLike) -> Tensor:    
         return Mul.apply(self._ensure_tensor(b), Inv.apply(self))
 
     def __matmul__(self, b: Tensor) -> Tensor:
