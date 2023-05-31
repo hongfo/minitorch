@@ -42,7 +42,6 @@ def index_to_position(index: Index, strides: Strides) -> int:
     Returns:
         Position in storage
     """
-
     # TODO: Implement for Task 2.1.
     pos = 0
     for i, v in enumerate(index):
@@ -92,8 +91,8 @@ def broadcast_index(
     """
     # TODO: Implement for Task 2.2.
     for i in range(len(shape)):
-        offset=i+len(big_shape)-len(shape)
-        out_index[i]=big_index[offset] if shape[i]!=1 else 0
+        offset = i + len(big_shape) - len(shape)
+        out_index[i] = big_index[offset] if shape[i] != 1 else 0
     # raise NotImplementedError("Need to implement for Task 2.2")
 
 
@@ -112,17 +111,16 @@ def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
         IndexingError : if cannot broadcast
     """
     # TODO: Implement for Task 2.2.
-    l=max(len(shape1),len(shape2))
-    if len(shape1)>len(shape2):
-        shape2=[1 for i in range(l-len(shape2))]+ list(shape2)
-        print([1 for i in range(l-len(shape2))]+ list(shape2))
+    l = max(len(shape1), len(shape2))
+    if len(shape1) > len(shape2):
+        shape2 = [1 for i in range(l - len(shape2))] + list(shape2)
     else:
-        shape1=[1 for i in range(l-len(shape1))]+list(shape1)
-    ans=[]
+        shape1 = [1 for i in range(l - len(shape1))] + list(shape1)
+    ans = []
     for i in range(l):
-        if shape1[i]!=shape2[i] and shape1[i]!=1 and shape2[i]!=1:
+        if shape1[i] != shape2[i] and shape1[i] != 1 and shape2[i] != 1:
             raise IndexingError("it cannot broadcast")
-        ans.append(max(shape1[i],shape2[i]))
+        ans.append(max(shape1[i], shape2[i]))
     return tuple(ans)
     raise NotImplementedError("Need to implement for Task 2.2")
 
@@ -157,7 +155,6 @@ class TensorData:
 
         if strides is None:
             strides = strides_from_shape(shape)
-
         assert isinstance(strides, tuple), "Strides must be tuple"
         assert isinstance(shape, tuple), "Shape must be tuple"
         if len(strides) != len(shape):
@@ -244,15 +241,16 @@ class TensorData:
 
         Returns:
             New `TensorData` with the same storage and a new dimension order.
-        """    
-        # TODO: Implement for Task 2.1.
+        """
+
         assert list(sorted(order)) == list(
             range(len(self.shape))
         ), f"Must give a position to each dimension. Shape: {self.shape} Order: {order}"
+        # TODO: Implement for Task 2.1.
         return TensorData(
             self._storage,
             tuple([self.shape[i] for i in order]),
-            tuple(self.strides[i] for i in order),
+            tuple([self.strides[i] for i in order]),
         )
         raise NotImplementedError("Need to implement for Task 2.1")
 
